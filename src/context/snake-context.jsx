@@ -11,7 +11,7 @@ export const initialState = {
   initialKeyPressed: ARROWRIGHT,
   gameEnd: false,
   gameStarted: false,
-  showFood: true,
+  showFood: false,
   foodPosition: {
     ...getRandomGridPosition(30, 20),
   },

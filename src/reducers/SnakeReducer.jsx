@@ -7,6 +7,7 @@ import {
   GROW_SNAKE,
   RANDOM_FOOD_POSITION,
   RESET_GRID,
+  SHOWFOOD,
   START_GAME,
   UPDATE_SCORE,
 } from "../constants/constants";
@@ -107,6 +108,8 @@ export const SnakeReducer = (state, { type, payload }) => {
         },
         showFood: true,
       };
+    case SHOWFOOD:
+      return { ...state, showFood: true };
 
     default:
       return { ...state };

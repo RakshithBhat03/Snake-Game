@@ -5,7 +5,11 @@ import useInterval from "../../hooks/useInterval";
 import { collisionWithWall } from "../../utils/collisionWithWall";
 import { Food } from "../Food/Food";
 import { willSnakeEatFood } from "../../utils/willSnakeEatFood";
-import { ARROWRIGHT, RANDOM_FOOD_POSITION } from "../../constants/constants";
+import {
+  ARROWRIGHT,
+  RANDOM_FOOD_POSITION,
+  SHOWFOOD,
+} from "../../constants/constants";
 import { collisionWithSnakeBody } from "../../utils/collisionWithSnakeBody";
 import { v4 as uuid } from "uuid";
 import { StartMenu } from "../StartMenu/StartMenu";
@@ -15,6 +19,7 @@ import { useEffect } from "react";
 export const GameBoard = () => {
   const { grid, dispatch } = useSnake();
   const { previousKey, setPreviousKey } = usePreviousKey();
+  //   const [showFood, setShowFood] = useState(false);
   const {
     snakePosition,
     foodPosition,
@@ -42,6 +47,12 @@ export const GameBoard = () => {
     },
     !gameStarted ? null : showFood ? 50000 : null
   );
+  useInterval(
+    () => {
+      dispatch({ type: SHOWFOOD });
+    },
+    gameStarted && !gameEnd ? (showFood ? null : 3000) : null
+  );
   useEffect(() => {
     if (gameEnd) {
       setPreviousKey(ARROWRIGHT);
@@ -57,7 +68,7 @@ export const GameBoard = () => {
         {snakePosition.map((snakePos) => (
           <Snake key={uuid()} position={snakePos} />
         ))}
-        {<Food position={foodPosition} />}
+        {showFood && <Food position={foodPosition} />}
         {showStartMenu && <StartMenu />}
         {gameEnd && <EndScreen />}
       </div>
